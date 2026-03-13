@@ -1,0 +1,7 @@
+streamlit
+groq
+sentence-transformers
+faiss-cpu
+duckduckgo-search
+python-dotenv
+numpy

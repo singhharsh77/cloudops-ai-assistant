@@ -1,0 +1,158 @@
+Section 0: ML Model Deployment Steps
+
+1. Train model
+2. Save using pickle or joblib
+3. Create FastAPI API
+4. Dockerize application
+5. Deploy to Kubernetes
+
+MLOps Deployment Knowledge Base
+
+Section 1: Machine Learning Model Deployment Workflow
+
+Typical Deployment Steps:
+
+1. Train the machine learning model.
+2. Save the trained model using pickle or joblib.
+3. Build an API service using FastAPI or Flask.
+4. Containerize the application using Docker.
+5. Deploy container to Kubernetes or cloud platform.
+
+
+Section 2: Model Versioning
+
+Problem:
+Different model versions need tracking.
+
+Solution:
+Use tools such as:
+- MLflow
+- DVC
+- Weights & Biases
+
+Benefits:
+- Track experiments
+- Compare model performance
+- Rollback models easily.
+
+
+Section 3: Model Monitoring
+
+Once deployed, models must be monitored.
+
+Key metrics:
+- Prediction accuracy
+- Latency
+- Data drift
+- Model drift
+
+Tools:
+- Prometheus
+- Grafana
+- Evidently AI
+
+
+Section 4: CI/CD for ML Models
+
+MLOps pipelines automate deployment.
+
+Pipeline Stages:
+1. Data validation
+2. Model training
+3. Model evaluation
+4. Container build
+5. Deployment
+
+Tools:
+- GitHub Actions
+- Jenkins
+- Kubeflow
+- Airflow
+
+
+Section 5: Deploying ML Model with FastAPI
+
+Example workflow:
+
+Step 1: Train model
+
+Step 2: Save model
+
+model.pkl
+
+Step 3: Create FastAPI service
+
+Example endpoint:
+
+POST /predict
+
+Input:
+{
+  "feature1": 10,
+  "feature2": 5
+}
+
+Output:
+{
+  "prediction": "class_A"
+}
+
+Step 4: Dockerize application
+
+Dockerfile example:
+
+FROM python:3.10
+WORKDIR /app
+COPY . .
+RUN pip install -r requirements.txt
+CMD ["uvicorn","main:app","--host","0.0.0.0","--port","8000"]
+
+Step 5: Deploy to Kubernetes cluster.
+
+
+Section 6: Common MLOps Deployment Issues
+
+Issue: Model loading failure
+
+Cause:
+Incorrect file path.
+
+Fix:
+Ensure model file exists in container.
+
+
+Issue: Slow prediction latency
+
+Cause:
+Large model size or inefficient inference.
+
+Fix:
+Use model optimization techniques such as quantization or batching.
+
+
+Issue: Inconsistent predictions
+
+Cause:
+Training and production data mismatch.
+
+Fix:
+Implement data validation and monitoring.
+
+CATEGORY: MLOps
+
+TOPIC: Model Drift Detection
+DEFINITION: When the statistical properties of the target variable change over time.
+MONITORING: Use Amazon SageMaker Model Monitor or Prometheus/Grafana to track "Data Drift" (feature distribution changes) and "Concept Drift" (relationship changes).
+
+ERROR: "CUDA Out of Memory (OOM)" in PyTorch/TensorFlow
+SYMPTOM: Training or inference container crashes when loading the model.
+MITIGATION:
+1. Reduce Batch Size in the deployment config.
+2. Use 'torch.cuda.empty_cache()' before loading a new model.
+3. Mixed Precision: Use FP16 instead of FP32 to reduce VRAM footprint.
+
+TOPIC: Serverless MLOps Pipeline
+ARCHITECTURE: 
+- Trigger: S3 Upload -> Lambda Function.
+- Processing: AWS Step Functions to orchestrate SageMaker Training Jobs.
+- Serving: SageMaker Serverless Inference endpoints for cost-effective, intermittent traffic.

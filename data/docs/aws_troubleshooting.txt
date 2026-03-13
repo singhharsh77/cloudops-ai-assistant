@@ -1,0 +1,126 @@
+Section 0: AWS S3 AccessDenied Error
+
+This error occurs when the IAM role or user lacks the required permissions.
+
+Solution:
+1. Check IAM policy
+2. Verify bucket policy
+3. Confirm correct region
+
+AWS Troubleshooting Knowledge Base
+
+Section 1: AWS S3 AccessDenied Error
+
+Problem:
+When accessing an S3 bucket, the user receives an "AccessDenied" error.
+
+Common Causes:
+- Incorrect IAM permissions
+- Bucket policy restrictions
+- Object-level permissions
+- Region mismatch
+
+Troubleshooting Steps:
+1. Verify IAM user or role permissions.
+2. Check the S3 bucket policy.
+3. Ensure the correct AWS region is used.
+4. Confirm the object exists and permissions allow access.
+5. Review CloudTrail logs for denied actions.
+
+Example Fix:
+Add the following permission in IAM policy:
+
+{
+  "Effect": "Allow",
+  "Action": "s3:GetObject",
+  "Resource": "arn:aws:s3:::bucket-name/*"
+}
+
+
+Section 2: EC2 Instance Not Accessible
+
+Problem:
+Unable to connect to EC2 instance using SSH.
+
+Common Causes:
+- Security group blocking port 22
+- Incorrect key pair
+- Instance stopped
+- Network ACL restrictions
+
+Troubleshooting Steps:
+1. Check instance status in AWS console.
+2. Verify security group allows inbound SSH (port 22).
+3. Ensure correct key pair is used.
+4. Verify public IP address.
+5. Check VPC network ACL rules.
+
+
+Section 3: Lambda Timeout Error
+
+Problem:
+AWS Lambda function times out before completing execution.
+
+Common Causes:
+- Long-running code
+- External API latency
+- Insufficient memory
+
+Solutions:
+1. Increase Lambda timeout configuration.
+2. Optimize code logic.
+3. Use asynchronous processing.
+4. Increase memory allocation.
+5. Use AWS Step Functions for longer workflows.
+
+
+Section 4: API Gateway 502 Bad Gateway
+
+Problem:
+API Gateway returns 502 error when invoking Lambda.
+
+Possible Causes:
+- Incorrect Lambda response format
+- Function timeout
+- Missing permissions
+
+Fix:
+Ensure Lambda response format is:
+
+{
+  "statusCode": 200,
+  "body": "response"
+}
+
+
+Section 5: CloudWatch Logs Not Appearing
+
+Problem:
+Logs from Lambda or EC2 are not visible in CloudWatch.
+
+Possible Causes:
+- Missing IAM permissions
+- Logging not enabled
+- Agent not installed
+
+Solutions:
+1. Attach CloudWatchLogsFullAccess policy.
+2. Enable logging in service configuration.
+3. Install and configure CloudWatch agent.
+
+CATEGORY: Infrastructure
+
+ERROR: AccessDenied (403) on S3
+SYMPTOM: User or service cannot upload/download from S3 bucket.
+CHECKLIST:
+1. Verify IAM Policy: Ensure "s3:PutObject" or "s3:GetObject" is granted.
+2. S3 Bucket Policy: Check if there is an explicit "Deny" for specific IPs or VPC Endpoints.
+3. Block Public Access (BPA): If public access is required, ensure BPA settings are disabled.
+4. KMS Encryption: If the bucket is encrypted with a CMK, the user must also have "kms:Decrypt" or "kms:GenerateDataKey" permissions.
+
+ERROR: VPC Timeout / Connection Refused
+SYMPTOM: EC2 instance cannot connect to the internet or database.
+CHECKLIST:
+1. Security Group (SG): Ensure Outbound rules allow traffic on required ports (e.g., 80, 443, 3306).
+2. Network ACL (NACL): NACLs are stateless; ensure both Inbound and Outbound rules are configured.
+3. Route Table: Ensure 0.0.0.0/0 is routed to an Internet Gateway (IGW) for public subnets or a NAT Gateway for private subnets.

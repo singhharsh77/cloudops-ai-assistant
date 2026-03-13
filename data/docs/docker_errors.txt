@@ -1,0 +1,119 @@
+Section 0: Docker Container Restart Loop
+
+Causes:
+1. Application crash
+2. Memory limits
+3. Incorrect entrypoint
+
+Solution:
+Check logs using:
+docker logs <container_id>
+
+Docker Troubleshooting Knowledge Base
+
+Section 1: Docker Container Restart Loop
+
+Problem:
+Container continuously restarts.
+
+Possible Causes:
+- Application crash
+- Incorrect entrypoint
+- Missing dependencies
+
+Troubleshooting Steps:
+1. Check container logs:
+
+docker logs <container_id>
+
+2. Verify Dockerfile configuration.
+3. Ensure required environment variables exist.
+4. Test the application locally.
+
+
+Section 2: Port Already Allocated Error
+
+Problem:
+Error message:
+"Bind for 0.0.0.0:8080 failed: port is already allocated"
+
+Cause:
+Another container or service is using the port.
+
+Solution:
+1. Identify process using the port:
+
+lsof -i :8080
+
+2. Stop conflicting container:
+
+docker stop <container_id>
+
+3. Use a different port.
+
+
+Section 3: Image Build Failure
+
+Problem:
+Docker image build fails during build stage.
+
+Common Reasons:
+- Incorrect dependencies
+- Package install failure
+- Network issues
+
+Troubleshooting:
+1. Verify Dockerfile syntax.
+2. Check package installation commands.
+3. Test commands outside Docker.
+
+
+Section 4: Container Cannot Connect to Database
+
+Problem:
+Application container cannot connect to database container.
+
+Possible Causes:
+- Network misconfiguration
+- Incorrect host name
+- Database not ready
+
+Fix:
+1. Ensure containers share same network.
+2. Use service name as host.
+3. Add retry logic.
+
+
+Section 5: Docker Out of Memory
+
+Problem:
+Container crashes due to memory issues.
+
+Causes:
+- Insufficient memory allocation
+- Memory leaks
+
+Solutions:
+1. Increase memory limit.
+2. Optimize application.
+3. Monitor container memory usage.
+
+CATEGORY: DevOps / Virtualization
+
+ERROR: "no space left on device"
+SYMPTOM: Docker cannot build images or start containers.
+SOLUTION: 
+- Run 'docker system prune -a' to remove unused images, containers, and networks.
+- Run 'docker volume prune' to clear dangling volumes.
+- Check /var/lib/docker mounting point disk usage.
+
+ERROR: "Could not resolve host" / DNS Issues
+SYMPTOM: Container cannot reach external APIs or other services.
+FIX: 
+1. Check /etc/resolv.conf inside the container.
+2. Use '--dns 8.8.8.8' flag during 'docker run' to force Google DNS.
+3. If using Docker Compose, ensure services are on the same bridge network.
+
+BEST PRACTICE: Multi-stage Builds
+- Use 'FROM python:3.9-slim AS builder' to compile dependencies.
+- Use 'FROM python:3.9-slim' for the final runtime to reduce image size and attack surface.
